@@ -8,8 +8,12 @@ import javax.validation.constraints.Size
 @Introspected
 data class NovoAutorRequest(@field:NotBlank val nome: String,
                             @field:NotBlank @field:Email val email: String,
-                            @field:NotBlank @field:Size(max = 400) val descricao: String){
-    fun paraAutor(): Autor{
-        return Autor(nome, email, descricao)
+                            @field:NotBlank @field:Size(max = 400) val descricao: String,
+                            @field:NotBlank val cep: String,
+                            @field:NotBlank val numero: String,
+                            @field:NotBlank @field:Placa val placa: String){
+    fun paraAutor(enderecoResponse: EnderecoResponse): Autor{
+        val endereco = Endereco(enderecoResponse, numero)
+        return Autor(nome, email, descricao, placa, endereco)
     }
 }
